@@ -10,3 +10,5 @@ Test2
 5. Игнорировать конфигурационные файлы интерфейса terraform: .terraformrc и terraform.rc
 
 Добавил метку Fix по хэш изменения "Prepare to delete and move"
+
+Попробовал отредактировать файл через PyCharm
