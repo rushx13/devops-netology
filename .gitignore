@@ -1,0 +1,5 @@
+#Files in folder for pycharm
+*.idea
+#SSH key
+*quat*
+
