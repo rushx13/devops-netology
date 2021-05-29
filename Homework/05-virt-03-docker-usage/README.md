@@ -89,19 +89,21 @@ Hey, Netology
 - Подключитесь во второй контейнер и отобразите листинг и содержание файлов в /info контейнера.
 
 
-  Ответ:
+Ответ:
+
+```  
+Centos контейнер:
+[root@d1654072a5ba info]# ls -l
+total 0
+-rw-r--r-- 1 root root 0 May 29 06:16 Test.txt
+-rw-r--r-- 1 root root 0 May 29 06:21 Test2.txt
   
-  Centos контейнер:
-  [root@d1654072a5ba info]# ls -l
-  total 0
-  -rw-r--r-- 1 root root 0 May 29 06:16 Test.txt
-  -rw-r--r-- 1 root root 0 May 29 06:21 Test2.txt
-   
-  Debian контейнер:
-  root@c0cbef341a49:/share/info# ls -l
-  total 0
-  -rw-r--r-- 1 root root 0 May 29 06:16 Test.txt
-  -rw-r--r-- 1 root root 0 May 29 06:21 Test2.txt
+Debian контейнер:
+root@c0cbef341a49:/share/info# ls -l
+total 0
+-rw-r--r-- 1 root root 0 May 29 06:16 Test.txt
+-rw-r--r-- 1 root root 0 May 29 06:21 Test2.txt
+```
 
 ---
 
