@@ -76,8 +76,8 @@ Hey, Netology
 ```
 Опубликуйте созданный форк в своем репозитории и предоставьте ответ в виде ссылки на докерхаб-репо.
 
-Ответ:
-https://hub.docker.com/layers/rushx13/my-apache2/latest/images/sha256-a9cf615ab86e44505c474ad596c46b3badc81900de1014615aa3d279c57795cc?context=explore
+   Ответ:
+   https://hub.docker.com/layers/rushx13/my-apache2/latest/images/sha256-a9cf615ab86e44505c474ad596c46b3badc81900de1014615aa3d279c57795cc?context=explore
 
 
 ## Задача 3 
@@ -88,4 +88,20 @@ https://hub.docker.com/layers/rushx13/my-apache2/latest/images/sha256-a9cf615ab8
 - Добавьте еще один файл в папку info на хостовой машине;
 - Подключитесь во второй контейнер и отобразите листинг и содержание файлов в /info контейнера.
 
+
+  Ответ:
+  
+  Centos контейнер:
+  [root@d1654072a5ba info]# ls -l
+  total 0
+  -rw-r--r-- 1 root root 0 May 29 06:16 Test.txt
+  -rw-r--r-- 1 root root 0 May 29 06:21 Test2.txt
+   
+  Debian контейнер:
+  root@c0cbef341a49:/share/info# ls -l
+  total 0
+  -rw-r--r-- 1 root root 0 May 29 06:16 Test.txt
+  -rw-r--r-- 1 root root 0 May 29 06:21 Test2.txt
+
 ---
+
