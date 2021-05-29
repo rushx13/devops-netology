@@ -19,7 +19,6 @@ RUN apt-get install -y ponysay
 ENTRYPOINT ["/usr/bin/ponysay"]
 CMD ["Hey, netology”]
 ```
-
 Для получения зачета, вам необходимо предоставить:
 - Написанный вами Dockerfile
 - Скриншот вывода командной строки после запуска контейнера из вашего базового образа
@@ -36,6 +35,11 @@ RUN pacman -Su --noconfirm ponysay
 
 ENTRYPOINT ["/usr/bin/ponysay"]
 CMD ["Hey, netology”]
+
+Скриншот:
+
+![](https://github.com/rushx13/devops-netology/blob/main/Homework/05-virt-04-docker-practical-skills/Task1/ponysay_screenshot.png)
+
 ```
 
 ## Задача 2 
