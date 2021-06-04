@@ -70,6 +70,91 @@ CMD ["Hey, netology”]
 - Скриншоты веб-интерфейса Jenkins запущенных вами контейнеров (достаточно 1 скриншота на контейнер)
 - Ссылки на образы в вашем хранилище docker-hub
 
+
+## Ответ:
+
+Наполнения 2х Dockerfile из задания
+
+Dockerfile.amazoncorretto:
+
+```
+FROM amazoncorretto:latest
+MAINTAINER Rushx13
+
+ADD https://pkg.jenkins.io/redhat-stable/jenkins.repo /etc/yum.repos.d/jenkins.>
+
+RUN rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key && \
+    yum update -y && \
+    yum install -y jenkins
+
+EXPOSE 8080/tcp
+
+EXPOSE 50000
+
+USER jenkins
+
+CMD ["-jar", "/usr/lib/jenkins/jenkins.war"]
+
+ENTRYPOINT ["java"]
+
+```
+
+
+Dockerfile.ubuntulatest
+
+
+```
+FROM ubuntu:latest
+
+MAINTAINER Rushx13
+
+ADD https://pkg.jenkins.io/debian-stable/jenkins.io.key /
+
+RUN apt-get update -y && \
+    apt-get install -y gnupg ca-certificates && \
+    apt-key add /jenkins.io.key && \
+    bash -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list' && \
+    apt-get update -y && \
+    apt-get install -y openjdk-8-jdk openjdk-8-jre jenkins
+
+EXPOSE 8080/tcp
+
+EXPOSE 5000
+
+USER jenkins
+
+WORKDIR "/usr/share/jenkins"
+
+CMD ["-jar", "jenkins.war"]
+
+ENTRYPOINT ["java"]
+
+```
+
+- Скриншоты логов запущенных вами контейнеров (из командной строки)
+
+![](https://github.com/rushx13/devops-netology/blob/main/Homework/05-virt-04-docker-practical-skills/Task2/log1_amazon.png)
+
+![](https://github.com/rushx13/devops-netology/blob/main/Homework/05-virt-04-docker-practical-skills/Task2/log2_ubuntu.png)
+
+
+- Скриншоты веб-интерфейса Jenkins запущенных вами контейнеров (достаточно 1 скриншота на контейнер)
+
+![](https://github.com/rushx13/devops-netology/blob/main/Homework/05-virt-04-docker-practical-skills/Task2/screenshot_amazoncorretto.png)
+
+![](https://github.com/rushx13/devops-netology/blob/main/Homework/05-virt-04-docker-practical-skills/Task2/screenshot_ubuntu.png)
+
+
+- Ссылки на образы в вашем хранилище docker-hub
+
+
+[Ссылка на образ jenkins_amazoncorretto](https://hub.docker.com/layers/rushx13/jenkins_amazoncorretto/latest/images/sha256-c291073404678f21d8f96884e5a55d05be77c4e7eb57a839270ec899c5580b38?context=repo)
+
+[Ссылка на образ jenkins_ununtu](https://hub.docker.com/layers/rushx13/jenkins_ubuntu/latest/images/sha256-7f4168d0d0f1a2af639bf22d105fa0946be02a629177dc997ccc2456faeb9ae2?context=repo)
+
+
+
+
 ## Задача 3 
 
 В данном задании вы научитесь:

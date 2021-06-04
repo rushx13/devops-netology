@@ -1,0 +1,24 @@
+FROM ubuntu:latest
+
+MAINTAINER Rushx13
+
+ADD https://pkg.jenkins.io/debian-stable/jenkins.io.key /
+
+RUN apt-get update -y && \
+    apt-get install -y gnupg ca-certificates && \
+    apt-key add /jenkins.io.key && \
+    bash -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list' && \
+    apt-get update -y && \
+    apt-get install -y openjdk-8-jdk openjdk-8-jre jenkins
+
+EXPOSE 8080/tcp
+
+EXPOSE 5000
+
+USER jenkins
+
+WORKDIR "/usr/share/jenkins"
+
+CMD ["-jar", "jenkins.war"]
+
+ENTRYPOINT ["java"]
