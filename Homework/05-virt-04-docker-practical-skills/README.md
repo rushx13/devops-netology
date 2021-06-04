@@ -41,6 +41,7 @@ CMD ["Hey, netology”]
 
 ![](https://github.com/rushx13/devops-netology/blob/main/Homework/05-virt-04-docker-practical-skills/Task1/ponysay_screenshot.png)
 
+[Ссылка на образ](https://hub.docker.com/layers/rushx13/ponysay/latest/images/sha256-6069fac73a42d7da66bc6c4511cdb30b7f5cb0d7da7d9c277f50d232b50dad97?context=repo "Мой образ ponysay")
 
 ## Задача 2 
 
