@@ -178,10 +178,50 @@ ENTRYPOINT ["java"]
 - Скриншот вывода вызова команды списка docker сетей (docker network cli)
 - Скриншот вызова утилиты curl с успешным ответом
 
+## Ответ
+
+Заметка для себя о командах, которые использовал:
+
+```
+1. docker run -d -p 3000:3000 829f59ef6a0d
+2. docker run -d -p 8080:8080 -p 5000:5000 fd603cbb8daf
+3. docker network create NETWORK
+4. docker network connect NETWORK 19285ea54eb6
+5. docker network connect NETWORK aaa0cc52b8c1
+6. docker exec -u 0 -ti aaa0cc52b8c1 bash
+9. root@aaa0cc52b8c1:/usr/share/jenkins# apt-get update && apt-get install curl
+10. curl 172.18.0.1:3000
+```
+
+- Наполнение Dockerfile с npm приложением
+
+```
+FROM node
+
+ADD https://github.com/simplicitesoftware/nodejs-demo/archive/master.zip /
+
+RUN unzip master.zip && \
+    cd /nodejs-demo-master && \
+    npm install
+
+EXPOSE 3000/tcp
+
+WORKDIR "/nodejs-demo-master"
+CMD ["start", "0.0.0.0"]
+ENTRYPOINT ["npm"]
+
+```
+
+- Скриншот вывода вызова команды списка docker сетей (docker network cli)
+
+
+![](https://github.com/rushx13/devops-netology/blob/main/Homework/05-virt-04-docker-practical-skills/Task3/screenshot_amazoncorretto.png)
+
+
+- Скриншот вызова утилиты curl с успешным ответом
+
+
+![](https://github.com/rushx13/devops-netology/blob/main/Homework/05-virt-04-docker-practical-skills/Task3/curl.png)
+
 ---
 
-### Как оформить ДЗ?
-
-Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
-
----
