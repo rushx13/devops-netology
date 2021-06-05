@@ -215,7 +215,7 @@ ENTRYPOINT ["npm"]
 - Скриншот вывода вызова команды списка docker сетей (docker network cli)
 
 
-![](https://github.com/rushx13/devops-netology/blob/main/Homework/05-virt-04-docker-practical-skills/Task3/screenshot_amazoncorretto.png)
+![](https://github.com/rushx13/devops-netology/blob/main/Homework/05-virt-04-docker-practical-skills/Task3/docker_network.png)
 
 
 - Скриншот вызова утилиты curl с успешным ответом
