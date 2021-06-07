@@ -81,7 +81,7 @@ Dockerfile.amazoncorretto:
 FROM amazoncorretto:latest
 MAINTAINER Rushx13
 
-ADD https://pkg.jenkins.io/redhat-stable/jenkins.repo /etc/yum.repos.d/jenkins.>
+ADD https://pkg.jenkins.io/redhat-stable/jenkins.repo /etc/yum.repos.d/jenkins.repo
 
 RUN rpm --import https://pkg.jenkins.io/redhat/jenkins.io.key && \
     yum update -y && \
