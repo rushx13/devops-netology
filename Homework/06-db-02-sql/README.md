@@ -12,6 +12,36 @@
 
 Приведите получившуюся команду или docker-compose манифест.
 
+## Ответ:
+
+```
+Содержимое docker-compose.yaml:
+
+version: "3"
+services:
+  db:
+    image: postgres:12
+    restart: always
+    volumes:
+       - /home/quattrox/sqlbackup:/sqlbackup
+    environment:
+      POSTGRES_PASSWORD: test
+
+Запущенный контейнер:
+
+root@e80bfaf8da33:/sqlbackup# root@Test:/home/quattrox# docker ps
+CONTAINER ID   IMAGE         COMMAND                  CREATED             STATUS         PORTS      NAMES
+e80bfaf8da33   postgres:12   "docker-entrypoint.s…"   About an hour ago   Up 7 seconds   5432/tcp   task1_db_1
+
+Зашел в контейнер, вижу подключенный sqlbackup:
+
+root@Test:/home/quattrox# docker exec -it e80bfaf8da33 bash
+root@e80bfaf8da33:/# ls
+bin   dev			  etc	lib    media  opt   root  sbin	     srv  tmp  var
+boot  docker-entrypoint-initdb.d  home	lib64  mnt    proc  run   sqlbackup  sys  usr
+
+```
+
 ## Задача 2
 
 В БД из задачи 1: 
