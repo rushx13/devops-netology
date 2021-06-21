@@ -189,6 +189,28 @@ select * from information_schema.table_privileges where table_name='clients' or 
 |Монитор| 7000|
 |Гитара| 4000|
 
+```
+test_db=# INSERT INTO public.orders VALUES (1, 'Шоколад', 10);
+INSERT 0 1
+test_db=# INSERT INTO public.orders VALUES (2, 'Принтер', 3000);
+INSERT 0 1
+test_db=# INSERT INTO public.orders VALUES (3, 'Книга', 500);
+INSERT 0 1
+test_db=# INSERT INTO public.orders VALUES (4, 'Монитор', 7000);
+INSERT 0 1
+test_db=# INSERT INTO public.orders VALUES (5, 'Гитара', 4000);
+INSERT 0 1
+
+test_db=# select * from public.orders;
+ id | наименование | цена 
+----+--------------+------
+  1 | Шоколад      |   10
+  2 | Принтер      | 3000
+  3 | Книга        |  500
+  4 | Монитор      | 7000
+  5 | Гитара       | 4000
+```
+
 Таблица clients
 
 |ФИО|Страна проживания|
