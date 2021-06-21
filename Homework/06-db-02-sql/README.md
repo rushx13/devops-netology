@@ -46,10 +46,13 @@ boot  docker-entrypoint-initdb.d  home	lib64  mnt    proc  run   sqlbackup  sys 
 
 В БД из задачи 1: 
 - создайте пользователя test-admin-user и БД test_db
+ ```
+ root@e80bfaf8da33:/# su postgres
+ postgres@e80bfaf8da33:/$ psql
+ postgres=# CREATE USER "test-admin-user" WITH PASSWORD 'admin';
+ postgres=# CREATE database test_db;
+ ```
 - в БД test_db создайте таблицу orders и clients (спeцификация таблиц ниже)
-- предоставьте привилегии на все операции пользователю test-admin-user на таблицы БД test_db
-- создайте пользователя test-simple-user  
-- предоставьте пользователю test-simple-user права на SELECT/INSERT/UPDATE/DELETE данных таблиц БД test_db
 
 Таблица orders:
 - id (serial primary key)
@@ -61,12 +64,116 @@ boot  docker-entrypoint-initdb.d  home	lib64  mnt    proc  run   sqlbackup  sys 
 - фамилия (string)
 - страна проживания (string, index)
 - заказ (foreign key orders)
+ ```
+ \c test_db
+ test_db=# CREATE TABLE orders (id SERIAL PRIMARY KEY, наименование VARCHAR (255), цена INT);
+ test_db=# CREATE TABLE clients (id SERIAL PRIMARY KEY, фамилия VARCHAR (255), "страна проживания" VARCHAR (255), заказ INT, FOREIGN KEY (заказ) REFERENCES orders (id));
+ ```
+- предоставьте привилегии на все операции пользователю test-admin-user на таблицы БД test_db
+ ```
+ postgres=# GRANT ALL PRIVILEGES ON DATABASE test_db TO "test-admin-user"
+ \c test_db
+ test_db=# GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "test-admin-user";
+ ```
+- создайте пользователя test-simple-user
+ ```
+ postgres=# CREATE USER "test-simple-user" WITH PASSWORD 'user';
+ ```
+- предоставьте пользователю test-simple-user права на SELECT/INSERT/UPDATE/DELETE данных таблиц БД test_db
+ ```
+ \c test_db
+ test_db=# GRANT SELECT, INSERT, UPDATE, DELETE ON public.orders to "test-simple-user";
+ test_db=# GRANT SELECT, INSERT, UPDATE, DELETE ON public.clients to "test-simple-user";
+ ```
 
 Приведите:
 - итоговый список БД после выполнения пунктов выше,
+```
+test_db=# \list
+                                     List of databases
+   Name    |  Owner   | Encoding |  Collate   |   Ctype    |       Access privileges        
+-----------+----------+----------+------------+------------+--------------------------------
+ postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 | 
+ template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres                   +
+           |          |          |            |            | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =c/postgres                   +
+           |          |          |            |            | postgres=CTc/postgres
+ test_db   | postgres | UTF8     | en_US.utf8 | en_US.utf8 | =Tc/postgres                  +
+           |          |          |            |            | postgres=CTc/postgres         +
+           |          |          |            |            | "test-admin-user"=CTc/postgres
+```
 - описание таблиц (describe)
+```
+test_db=# \d clients
+                                         Table "public.clients"
+      Column       |          Type          | Collation | Nullable |               Default               
+-------------------+------------------------+-----------+----------+-------------------------------------
+ id                | integer                |           | not null | nextval('clients_id_seq'::regclass)
+ фамилия           | character varying(255) |           |          | 
+ страна проживания | character varying(255) |           |          | 
+ заказ             | integer                |           |          | 
+Indexes:
+    "clients_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "clients_заказ_fkey" FOREIGN KEY ("заказ") REFERENCES orders(id)
+
+test_db=# \d orders
+                                       Table "public.orders"
+    Column    |          Type          | Collation | Nullable |              Default               
+--------------+------------------------+-----------+----------+------------------------------------
+ id           | integer                |           | not null | nextval('orders_id_seq'::regclass)
+ наименование | character varying(255) |           |          | 
+ цена         | integer                |           |          | 
+Indexes:
+    "orders_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+    TABLE "clients" CONSTRAINT "clients_заказ_fkey" FOREIGN KEY ("заказ") REFERENCES orders(id)
+```
 - SQL-запрос для выдачи списка пользователей с правами над таблицами test_db
+```
+select * from information_schema.table_privileges where table_name='clients' or table_name = 'orders';
+```
 - список пользователей с правами над таблицами test_db
+```
+ grantor  |     grantee      | table_catalog | table_schema | table_name | privilege_type | is_grantable | with_hierarchy 
+----------+------------------+---------------+--------------+------------+----------------+--------------+----------------
+ postgres | postgres         | test_db       | public       | orders     | INSERT         | YES          | NO
+ postgres | postgres         | test_db       | public       | orders     | SELECT         | YES          | YES
+ postgres | postgres         | test_db       | public       | orders     | UPDATE         | YES          | NO
+ postgres | postgres         | test_db       | public       | orders     | DELETE         | YES          | NO
+ postgres | postgres         | test_db       | public       | orders     | TRUNCATE       | YES          | NO
+ postgres | postgres         | test_db       | public       | orders     | REFERENCES     | YES          | NO
+ postgres | postgres         | test_db       | public       | orders     | TRIGGER        | YES          | NO
+ postgres | test-simple-user | test_db       | public       | orders     | INSERT         | NO           | NO
+ postgres | test-simple-user | test_db       | public       | orders     | SELECT         | NO           | YES
+ postgres | test-simple-user | test_db       | public       | orders     | UPDATE         | NO           | NO
+ postgres | test-simple-user | test_db       | public       | orders     | DELETE         | NO           | NO
+ postgres | test-admin-user  | test_db       | public       | orders     | INSERT         | NO           | NO
+ postgres | test-admin-user  | test_db       | public       | orders     | SELECT         | NO           | YES
+ postgres | test-admin-user  | test_db       | public       | orders     | UPDATE         | NO           | NO
+ postgres | test-admin-user  | test_db       | public       | orders     | DELETE         | NO           | NO
+ postgres | test-admin-user  | test_db       | public       | orders     | TRUNCATE       | NO           | NO
+ postgres | test-admin-user  | test_db       | public       | orders     | REFERENCES     | NO           | NO
+ postgres | test-admin-user  | test_db       | public       | orders     | TRIGGER        | NO           | NO
+ postgres | postgres         | test_db       | public       | clients    | INSERT         | YES          | NO
+ postgres | postgres         | test_db       | public       | clients    | SELECT         | YES          | YES
+ postgres | postgres         | test_db       | public       | clients    | UPDATE         | YES          | NO
+ postgres | postgres         | test_db       | public       | clients    | DELETE         | YES          | NO
+ postgres | postgres         | test_db       | public       | clients    | TRUNCATE       | YES          | NO
+ postgres | postgres         | test_db       | public       | clients    | REFERENCES     | YES          | NO
+ postgres | postgres         | test_db       | public       | clients    | TRIGGER        | YES          | NO
+ postgres | test-simple-user | test_db       | public       | clients    | INSERT         | NO           | NO
+ postgres | test-simple-user | test_db       | public       | clients    | SELECT         | NO           | YES
+ postgres | test-simple-user | test_db       | public       | clients    | UPDATE         | NO           | NO
+ postgres | test-simple-user | test_db       | public       | clients    | DELETE         | NO           | NO
+ postgres | test-admin-user  | test_db       | public       | clients    | INSERT         | NO           | NO
+ postgres | test-admin-user  | test_db       | public       | clients    | SELECT         | NO           | YES
+ postgres | test-admin-user  | test_db       | public       | clients    | UPDATE         | NO           | NO
+ postgres | test-admin-user  | test_db       | public       | clients    | DELETE         | NO           | NO
+ postgres | test-admin-user  | test_db       | public       | clients    | TRUNCATE       | NO           | NO
+ postgres | test-admin-user  | test_db       | public       | clients    | REFERENCES     | NO           | NO
+ postgres | test-admin-user  | test_db       | public       | clients    | TRIGGER        | NO           | NO
+```
 
 ## Задача 3
 
