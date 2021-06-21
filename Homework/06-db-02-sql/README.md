@@ -29,7 +29,7 @@ services:
 
 Запущенный контейнер:
 
-root@e80bfaf8da33:/sqlbackup# root@Test:/home/quattrox# docker ps
+root@Test:/home/quattrox# docker ps
 CONTAINER ID   IMAGE         COMMAND                  CREATED             STATUS         PORTS      NAMES
 e80bfaf8da33   postgres:12   "docker-entrypoint.s…"   About an hour ago   Up 7 seconds   5432/tcp   task1_db_1
 
