@@ -289,6 +289,25 @@ test_db=# SELECT count (*) FROM clients;
  
 Подсказк - используйте директиву `UPDATE`.
 
+Ответ:
+```
+test_db=# UPDATE clients SET "заказ" = 3 WHERE id = 1;
+test_db=# UPDATE clients SET "заказ" = 4 WHERE id = 2;
+test_db=# UPDATE clients SET "заказ" = 5 WHERE id = 3;
+
+test_db=# select * from public.clients;
+
+ id |         ФИО          | страна проживания | заказ 
+----+----------------------+-------------------+-------
+  4 | Ронни Джеймс Дио     | Russia            |      
+  5 | Ritchie Blackmore    | Russia            |      
+  1 | Иванов Иван Иванович | USA               |     3
+  2 | Петров Петр Петрович | Canada            |     4
+  3 | Иоганн Себастьян Бах | Japan             |     5
+(5 rows)
+
+```
+
 ## Задача 5
 
 Получите полную информацию по выполнению запроса выдачи всех пользователей из задачи 4 
