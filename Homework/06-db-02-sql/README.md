@@ -337,9 +337,21 @@ test_db=# EXPLAIN SELECT * FROM public.clients;
 
 Создайте бэкап БД test_db и поместите его в volume, предназначенный для бэкапов (см. Задачу 1).
 
+Ответ:
+
+```
+root@e80bfaf8da33:/# pg_dump -U postgres test_db > sqlbackup/test_db.sql
+root@e80bfaf8da33:/# ls sqlbackup/
+test_db.sql
+```
+
 Остановите контейнер с PostgreSQL (но не удаляйте volumes).
 
 Поднимите новый пустой контейнер с PostgreSQL.
+
+```
+root@Test:/home/quattrox# docker run -d --name postgres_new -e POSTGRESS_PASSWORD=postgres -v /home/quattrox/sqlbackup:/sqlbackup postgres:12
+```
 
 Восстановите БД test_db в новом контейнере.
 
