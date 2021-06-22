@@ -350,12 +350,24 @@ test_db.sql
 Поднимите новый пустой контейнер с PostgreSQL.
 
 ```
-root@Test:/home/quattrox# docker run -d --name postgres_new -e POSTGRESS_PASSWORD=postgres -v /home/quattrox/sqlbackup:/sqlbackup postgres:12
+root@Test:/home/quattrox# docker run -d --name postgresnew -e POSTGRES_PASSWORD=postgres -v /home/quattrox/sqlbackup:/sqlbackup postgres:12
+root@Test:/home/quattrox# docker exec -it postgresnew bash
 ```
 
 Восстановите БД test_db в новом контейнере.
-
 Приведите список операций, который вы применяли для бэкапа данных и восстановления. 
+
+```
+root@67d64d2ee52a:/# su postgres
+postgres=# CREATE DATABASE test_db WITH ENCODING='UTF-8';
+exit
+root@67d64d2ee52a:/# psql -U postgres -W test_db < /sqlbackup/test_db.sql
+
+Таблицы с данными восстановились.
+
+Важный комментарий - мы получаем сообщение о том, что роли test-simple-user и test-admin-user отсутствуют.
+Их можно создать так же как и в задачах выше.
+```
 
 ---
 
