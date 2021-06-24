@@ -102,7 +102,32 @@ test_database=# SELECT avg_width from pg_stats where tablename='orders' ORDER BY
 
 Предложите SQL-транзакцию для проведения данной операции.
 
+```
+test_database=# CREATE TABLE orders_big (id INT, item varchar (255), price INT) PARTITION BY RANGE (price); 
+
+test_database=# CREATE TABLE orders_1 PARTITION OF orders_big FOR VALUES FROM (499) TO (MAXVALUE); 
+test_database=# CREATE TABLE orders_2 PARTITION OF orders_big FOR VALUES FROM (MINVALUE) TO (499); 
+
+test_database=# INSERT INTO orders_big SELECT * FROM orders;
+INSERT 0 8
+
+test_database=# \dt
+                 List of relations
+ Schema |    Name    |       Type        |  Owner   
+--------+------------+-------------------+----------
+ public | orders     | table             | postgres
+ public | orders_1   | table             | postgres
+ public | orders_2   | table             | postgres
+ public | orders_big | partitioned table | postgres
+(4 rows)
+
+```
+
 Можно ли было изначально исключить "ручное" разбиение при проектировании таблицы orders?
+
+```
+Да конечно, сразу создавать partitioned table тип.
+```
 
 ## Задача 4
 
