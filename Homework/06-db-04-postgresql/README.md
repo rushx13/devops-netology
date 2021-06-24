@@ -4,16 +4,46 @@
 
 Используя docker поднимите инстанс PostgreSQL (версию 13). Данные БД сохраните в volume.
 
+```
+root@Test:/home/quattrox# docker run -d --name postgres13 -e POSTGRES_PASSWORD=postgres -v /home/quattrox/sqlbackup:/sqlbackup postgres:13
+```
+
 Подключитесь к БД PostgreSQL используя `psql`.
+
+```
+root@Test:/home/quattrox# docker exec -it a1fe9d0aad27 bash
+root@a1fe9d0aad27:/# su postgres
+postgres@a1fe9d0aad27:/$ psql
+psql (13.3 (Debian 13.3-1.pgdg100+1))
+Type "help" for help.
+
+postgres=# 
+```
 
 Воспользуйтесь командой `\?` для вывода подсказки по имеющимся в `psql` управляющим командам.
 
 **Найдите и приведите** управляющие команды для:
 - вывода списка БД
+```
+\l[+]   [PATTERN]      list databases
+```
 - подключения к БД
+```
+  \c[onnect] {[DBNAME|- USER|- HOST|- PORT|-] | conninfo}
+                         connect to new database (currently "postgres")
+```
 - вывода списка таблиц
+```
+  \d[S+]                 list tables, views, and sequences
+```
 - вывода описания содержимого таблиц
+```
+\d[S+]  NAME           describe table, view, sequence, or index
+```
 - выхода из psql
+```
+ \q                     quit psql
+```
 
 ## Задача 2
 
