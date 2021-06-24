@@ -139,6 +139,12 @@ root@a1fe9d0aad27:/# pg_dump -U postgres test_database > sqlbackup/test_database
 
 Как бы вы доработали бэкап-файл, чтобы добавить уникальность значения столбца `title` для таблиц `test_database`?
 
+```
+postgres=# \c test_database 
+test_database=# ALTER TABLE ONLY orders ADD UNIQUE (title);
+ALTER TABLE
+```
+
 ---
 
 ### Как оформить ДЗ?
