@@ -87,6 +87,24 @@ on linux_amd64
 В виде результата этой задачи приложите вывод `--version` двух версий терраформа доступных на вашем компьютере 
 или виртуальной машине.
 
+```
+Создадим символические ссылки и будем вызывать нужные нам версии когда потребуется.
+
+quattrox@Test:~$ sudo ln -s /home/quattrox/DevOps/Terraform/0.12/terraform /usr/bin/terraform12
+quattrox@Test:~$ sudo ln -s /home/quattrox/DevOps/Terraform/0.13/terraform /usr/bin/terraform13
+quattrox@Test:~$ terraform12 --version
+Terraform v0.12.0
+
+Your version of Terraform is out of date! The latest version
+is 1.0.1. You can update by downloading from www.terraform.io/downloads.html
+quattrox@Test:~$ terraform13 --version
+
+Your version of Terraform is out of date! The latest version
+is 1.0.1. You can update by downloading from https://www.terraform.io/downloads.html
+Terraform v0.13.0
+quattrox@Test:~$ 
+```
+
 ---
 
 ### Как оформить ДЗ?
