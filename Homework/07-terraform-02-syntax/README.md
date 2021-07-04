@@ -27,6 +27,15 @@ Default output format [json]:
     * AmazonRDSFullAccess
     * CloudWatchFullAccess
     * IAMFullAccess
+
+```
+Добавил права:
+```
+![](https://github.com/rushx13/devops-netology/blob/main/Homework/07-terraform-02-syntax/iam.png)
+```
+Так же можно использовать код в json формате из веб интерфейса и использовать его в tf файле.
+```
+
 5. Добавьте переменные окружения 
     ```
     export AWS_ACCESS_KEY_ID=(your access key id)
@@ -36,6 +45,15 @@ Default output format [json]:
 
 В виде результата задания приложите вывод команды `aws configure list`.
 
+```
+quattrox@Test:~/devops-netology$ aws configure list
+      Name                    Value             Type    Location
+      ----                    -----             ----    --------
+   profile                <not set>             None    None
+access_key     ****************VDYP shared-credentials-file    
+secret_key     ****************kr60 shared-credentials-file    
+    region             eu-central-1      config-file    ~/.aws/config
+```
 
 ## Задача 2. Созданием ec2 через терраформ. 
 
