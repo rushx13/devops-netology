@@ -76,6 +76,13 @@ secret_key     ****************kr60 shared-credentials-file
     * Идентификатор подсети в которой создан инстанс.  
 8. Если вы выполнили первый пункт, то добейтесь того, что бы команда `terraform plan` выполнялась без ошибок. 
 
+```
+Результат:
+
+quattrox@Test:~/DevOps/Terraform$ sudo terraform plan
+No changes. Your infrastructure matches the configuration.
+Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
+```
 
 В качестве результата задания предоставьте:
 1. Ответ на вопрос: при помощи какого инструмента (из разобранных на прошлом занятии) можно создать свой образ ami?
