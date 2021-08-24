@@ -22,6 +22,60 @@
 
 **Приведите в ответе** количество записей с `price` > 300.
 
+```
+1. sudo docker run --name mysql8 -e MYSQL_ROOT_PASSWORD=password -v /home/quattrox/sqlbackup/:/sqlbackup -d mysql:8
+2. sudo docker exec -it a9d0c8be7 bash
+3. mysql -u root -p 
+4. mysql> CREATE DATABASE test_db;
+   Query OK, 1 row affected (0.02 sec)
+5. mysql> exit
+   Bye
+6. root@a9d0c8be7b3d:~# mysql -u root -p test_db < /sqlbackup/test_dump2.sql
+7. mysql> use test_db;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+8. mysql> show full tables;
++-------------------+------------+
+| Tables_in_test_db | Table_type |
++-------------------+------------+
+| orders            | BASE TABLE |
++-------------------+------------+
+1 row in set (0.00 sec)
+
+9. mysql> show columns from orders from test_db;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | int unsigned | NO   | PRI | NULL    | auto_increment |
+| title | varchar(80)  | NO   |     | NULL    |                |
+| price | int          | YES  |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+10. mysql> select * from orders;
++----+-----------------------+-------+
+| id | title                 | price |
++----+-----------------------+-------+
+|  1 | War and Peace         |   100 |
+|  2 | My little pony        |   500 |
+|  3 | Adventure mysql times |   300 |
+|  4 | Server gravity falls  |   300 |
+|  5 | Log gossips           |   123 |
++----+-----------------------+-------+
+5 rows in set (0.01 sec)
+
+11. mysql> select * from orders where price > 300;
++----+----------------+-------+
+| id | title          | price |
++----+----------------+-------+
+|  2 | My little pony |   500 |
++----+----------------+-------+
+1 row in set (0.01 sec)
+```
+
+
 В следующих заданиях мы будем продолжать работу с данным контейнером.
 
 ## Задача 2
